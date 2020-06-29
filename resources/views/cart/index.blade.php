@@ -14,7 +14,7 @@
                 </tr>
                 </thead>
                 <tbody>
-
+                @empty(!$cart->items)
                 @foreach($cart->items as $item)
                     <tr>
                         <td class="col-sm-8 col-md-6">
@@ -63,8 +63,16 @@
                         </a></td>
                 </tr>
                 </tbody>
-
+                @else
+                    <tr><td colspan="4">
+                                Chưa có sản phẩm nào trong giỏ hàng
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="{{route('home')}}">Continus Shoping </a>
+                        <td>
+                    </tr>
             </table>
+            @endempty
         </div>
     </div>
 @endsection
