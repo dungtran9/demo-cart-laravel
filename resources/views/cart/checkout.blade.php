@@ -6,7 +6,8 @@
                 <h1>Thông tin khách hàng</h1>
             </div>
             <div class="col-12">
-                <form method="post" action="">
+
+                <form method="post" action="{{route('cart.payment')}}">
                     @csrf
                     <div class="form-group">
                         <label>Tên khách hàng</label>

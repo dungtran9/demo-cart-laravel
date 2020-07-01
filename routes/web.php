@@ -20,4 +20,5 @@ Route::prefix('cart')->group(function (){
     Route::get('/{idProduct}/remove','CartController@remove')->name('cart.remove');
     Route::post('/{idProduct}/update','CartController@update')->name('cart.update');
     Route::get('checkout','CartController@checkOut')->name('cart.checkout');
+    Route::post('checkout','CartController@payment')->name('cart.payment');
 });

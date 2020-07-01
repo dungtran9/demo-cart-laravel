@@ -29,7 +29,7 @@
                         <form action="{{route('cart.update',$item['item']->id)}}" method="post">
                             @csrf
                         <td class="col-sm-1 col-md-1" style="text-align: center">
-                            <input type="number" name="qty" class="form-control" id="exampleInputEmail1" value="{{ $item['totalQty'] }}">
+                            <input type="number" name="qty"  min="1" class="form-control" id="exampleInputEmail1" value="{{ $item['totalQty'] }}">
                         </td>
                         <td class="col-sm-1 col-md-1 text-center"><strong>{{ $item['item']->price }}</strong></td>
                         <td class="col-sm-1 col-md-1 text-center"><strong>{{ $item['totalPrice'] }}</strong></td>

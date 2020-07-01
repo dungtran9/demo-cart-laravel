@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Bill;
 use App\Cart;
+use App\Customer;
 use App\Product;
+use Carbon\Traits\Date;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -43,7 +46,7 @@ class CartController extends Controller
                 $cart = new Cart($oldCart);
                 $cart->remove($idProduct);
                 Session::put('cart', $cart);
-                toastr()->success('Đã xóa sản phẩm vào giỏ hàng', 'Success');
+                toastr()->success('Đã xóa sản phẩm trong giỏ hàng', 'Success');
             } else {
                 toastr()->error('Bạn chưa mua sp nào', 'Inconceivable!');
             }
@@ -52,6 +55,7 @@ class CartController extends Controller
         }
         return back();
     }
+
     public function update(Request $request, $idProduct)
     {
         if (Session::has('cart')) {
@@ -69,8 +73,35 @@ class CartController extends Controller
         }
         return back();
     }
-    public function checkOut(){
+
+    public function checkOut()
+    {
         return view('cart/checkout');
+    }
+
+    public function payment(Request $request)
+    {
+        $customer = new Customer();
+        $customer->name = $request->name;
+        $customer->email = $request->email;
+        $customer->address = $request->address;
+        $customer->phone = $request->phone;
+        $customer->save();
+        $cart = Session::get('cart');
+        $customer1 = Customer::all();
+        $bill = new Bill();
+        $bill->dateBuy = getdate()['year'] . "-" . getdate()['mon'] . "-" . getdate()['mday'];
+        $bill->total = $cart->totalPrice;
+        $bill->note = $request->note;
+        $bill->customer_id = $customer1[count($customer1) - 1]['id'];
+        $bill->save();
+        toastr()->success('Đơn hàng của bạn đang được xử lý ');
+        foreach ($cart->items as $key => $product){
+            $bill->products()->attach($key);
+        }
+
+            return redirect()->route('home');
+
     }
 
 }

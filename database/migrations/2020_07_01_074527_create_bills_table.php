@@ -18,9 +18,9 @@ class CreateBillsTable extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->date('dateBuy');
-            $table->date('total');
-            $table->date('note');
-            $table->date('status');
+            $table->string('total');
+            $table->string('note');
+            $table->string('status');
             $table->timestamps();
         });
     }
